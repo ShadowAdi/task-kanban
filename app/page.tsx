@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export default function Home() {
   return (
@@ -6,6 +8,10 @@ export default function Home() {
         <h1 className="text-3xl font-medium">
           All Taks
         </h1>
+        <Button className="text-base ">
+          <Plus />
+          Create New
+        </Button>
 
       </div>
     </main>
