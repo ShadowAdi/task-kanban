@@ -1,9 +1,10 @@
+import Board from "@/components/globals/Board";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="flex flex-col w-full min-h-screen px-8 py-8">
+    <main className="flex flex-col w-full min-h-screen p-8 space-y-3">
       <div className="flex items-center w-full justify-between ">
         <h1 className="text-4xl font-medium">
           All Taks
@@ -14,6 +15,7 @@ export default function Home() {
         </Button>
 
       </div>
+      <Board/>
     </main>
   );
 }
