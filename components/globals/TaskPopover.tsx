@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Textarea } from '../ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { db } from '@/db/db'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -26,8 +28,15 @@ const TaskPopover = () => {
         }
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log("values ", values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const newTask = {
+            ...values,
+            createdAt: new Date()
+        }
+
+        await db.tasks.add(newTask)
+        toast.success("Task has been created")
+        form.reset()
     }
 
     return (
