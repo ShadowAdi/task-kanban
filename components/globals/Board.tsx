@@ -43,47 +43,37 @@ const Board = () => {
 
 
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { over, active } = event;
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
     if (!over) return;
 
-    const taskId = active.id;
-
-    const map: Record<string, "todo" | "in_progress" | "done"> = {
-      "todo": "todo",
-      "in_progress": "in_progress",
-      "in-progress": "in_progress",
-      "done": "done",
-    };
-
-    const newStatus = map[over.id];
-    if (!newStatus) return;
+    const taskId = active.id as number;
+    const newStatus = over.id as "todo" | "in_progress" | "done";
 
     setColumns((prev) => {
-      let movedTask: TaskInterface | null = null;
+      const withoutTask = {
+        todo: prev.todo.filter((t) => t.id !== taskId),
+        in_progress: prev.in_progress.filter((t) => t.id !== taskId),
+        done: prev.done.filter((t) => t.id !== taskId)
+      };
 
-      const newState = {
-        todo: [],
-        in_progress: [],
-        done: [],
-      } as typeof prev;
+      const moved = prev.todo.find((t) => t.id === taskId)
+        || prev.in_progress.find((t) => t.id === taskId)
+        || prev.done.find((t) => t.id === taskId);
 
-      for (const col of Object.keys(prev) as (keyof typeof prev)[]) {
-        prev[col].forEach((t) => {
-          if (t.id === taskId) movedTask = t;
-          else newState[col].push(t);
-        });
-      }
+      if (!moved) return prev;
 
-      if (movedTask) {
-        movedTask.status = newStatus;
-        newState[newStatus].push(movedTask);
-        db.tasks.update(taskId, { status: newStatus })
-      }
+      const updated = { ...moved, status: newStatus };
 
-      return newState;
+      return {
+        ...withoutTask,
+        [newStatus]: [updated, ...withoutTask[newStatus]]
+      };
     });
+
+    await db.tasks.update(taskId, { status: newStatus });
   };
+
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
