@@ -66,22 +66,23 @@ const Task = ({ id, title }: { id: number, title: string }) => {
 
           {task ? (
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">{task.name}</h3>
+              <h3 className="font-semibold text-2xl">{task.name}</h3>
 
-              <p className="text-sm text-gray-600">
+              <p className="text-base text-stone-900">
                 {task.description || "No description"}
               </p>
 
-              <p className="text-xs text-gray-500 uppercase">
-                Status: {task.status.replace("_", " ")}
+              <p className="text-lg text-gray-800 ">
+                Status: <span className='uppercase'>{task.status.replace("_", " ")}
+                  </span> 
               </p>
 
-              <div className="flex justify-between pt-2">
-                <Button size="sm" onClick={() => setOpenEdit(true)}>
+              <div className="flex space-x-4 items-end justify-end pt-2">
+                <Button size="sm" className='text-base cursor-pointer! px-4 py-3 rounded-sm'  onClick={() => setOpenEdit(true)}>
                   Edit
                 </Button>
 
-                <Button size="sm" variant="destructive" onClick={deleteTask}>
+                <Button size="sm"  className='text-base cursor-pointer! px-4 py-3 rounded-sm' variant="destructive" onClick={deleteTask}>
                   Delete
                 </Button>
               </div>
