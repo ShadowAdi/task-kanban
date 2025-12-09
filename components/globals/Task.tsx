@@ -14,11 +14,23 @@ const Task = ({ id, title }: { id: number | undefined, title: string }) => {
 
   return (
     <div
-      onClick={() => setOpen(true)}
-
-      ref={setNodeRef} {...listeners} {...attributes} style={style} className="p-3 rounded-lg bg-gray-200 shadow-sm cursor-grab mb-2"
+      style={style}
+      className="p-3 rounded-lg bg-gray-200 shadow-sm mb-2 flex items-center justify-between"
+      ref={setNodeRef}
     >
-      {title}
+      <div onClick={() => setOpen(true)} className="cursor-pointer w-full">
+        {title}
+      </div>
+
+      <div
+        {...listeners}
+        {...attributes}
+        className="cursor-grab p-2"
+        onClick={(e) => e.stopPropagation()} 
+      >
+        ☰
+      </div>
+
       <EditTaskDialog taskId={id!} open={open} setOpen={setOpen} />
     </div>
   )
