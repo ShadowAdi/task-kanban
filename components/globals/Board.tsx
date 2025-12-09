@@ -74,6 +74,7 @@ const handleDragEnd = (event: DragEndEvent) => {
     if (movedTask) {
       movedTask.status = newStatus;
       newState[newStatus].push(movedTask);
+      db.tasks.update(taskId,{status:newStatus})
     }
 
     return newState;
