@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Textarea } from '../ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { db } from '@/db/db'
+import { db, taskEvent } from '@/db/db'
 import { toast } from 'sonner'
 import { useState } from 'react'
 
@@ -40,6 +40,7 @@ const TaskPopover = () => {
 
         toast.success("Task created");
         form.reset();
+        taskEvent.dispatchEvent(new Event("refresh"));
         setOpen(false);
     }
 

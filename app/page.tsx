@@ -1,7 +1,8 @@
+'use client'
 import Board from "@/components/globals/Board";
 import TaskPopover from "@/components/globals/TaskPopover";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { taskEvent } from "@/db/db";
 
 export default function Home() {
   return (
@@ -10,7 +11,14 @@ export default function Home() {
         <h1 className="text-4xl font-medium">
           All Taks
         </h1>
-       <TaskPopover/>
+        <div className="flex space-x-3 items-center">
+          <Button onClick={() => {
+            taskEvent.dispatchEvent(new Event("refresh"));
+          }} className="cursor-pointer!" variant={"outline"}>
+            Refresh
+          </Button>
+          <TaskPopover />
+        </div>
       </div>
       <Board />
     </main>
