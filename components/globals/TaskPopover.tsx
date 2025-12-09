@@ -31,17 +31,18 @@ const TaskPopover = () => {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        alert("hii")
         const newTask = {
             ...values,
             createdAt: new Date()
-        }
+        };
 
-        await db.tasks.add(newTask)
-        toast.success("Task has been created")
-        form.reset()
-        setOpen(false)
+        await db.tasks.add(newTask);
+
+        toast.success("Task created");
+        form.reset();
+        setOpen(false);
     }
+
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

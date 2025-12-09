@@ -4,7 +4,7 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import React, { useEffect, useState } from "react";
 import { Column } from "./Column";
 import Task from "./Task";
-import { db, TaskInterface } from "@/db/db";
+import { db, taskEvent, TaskInterface } from "@/db/db";
 
 const Board = () => {
   const [columns, setColumns] = useState<{
@@ -34,6 +34,10 @@ const Board = () => {
     };
 
     fetch();
+
+    const listener=()=>fetch()
+    taskEvent.addEventListener("refresh",listener)
+    return ()=>taskEvent.removeEventListener("refresh",listener)
   }, []);
 
 

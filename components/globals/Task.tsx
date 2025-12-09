@@ -1,8 +1,10 @@
 import { useDraggable } from '@dnd-kit/core'
-import React from 'react'
+import React, { useState } from 'react'
+import EditTaskDialog from './TaskUpdatePopover';
 
-const Task = ({ id, title }: { id: number|undefined, title: string }) => {
+const Task = ({ id, title }: { id: number | undefined, title: string }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: id! })
+  const [open, setOpen] = useState(false);
 
   const style = {
     transform: transform
@@ -11,9 +13,13 @@ const Task = ({ id, title }: { id: number|undefined, title: string }) => {
   };
 
   return (
-    <div ref={setNodeRef} {...listeners} {...attributes} style={style} className="p-3 rounded-lg bg-gray-200 shadow-sm cursor-grab mb-2"
+    <div
+      onClick={() => setOpen(true)}
+
+      ref={setNodeRef} {...listeners} {...attributes} style={style} className="p-3 rounded-lg bg-gray-200 shadow-sm cursor-grab mb-2"
     >
       {title}
+      <EditTaskDialog taskId={id!} open={open} setOpen={setOpen} />
     </div>
   )
 }
