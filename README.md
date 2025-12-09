@@ -3,6 +3,8 @@
 A modern Kanban-style task board built using **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **dnd-kit**.  
 The board supports drag-and-drop workflow management with persistent storage via IndexedDB.
 
+Deployed Link(https://task-kanban-henna.vercel.app/)[https://task-kanban-henna.vercel.app/]
+
 ---
 
 ## 🚀 Features
