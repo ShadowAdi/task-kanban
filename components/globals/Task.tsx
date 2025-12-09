@@ -22,17 +22,33 @@ const Task = ({ id, title }: { id: number, title: string }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [task, setTask] = useState<TaskInterface | null>(null);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [loadingOpen, setLoadingOpen] = useState(false);
 
   useEffect(() => {
-    if (!openDialog) return;
-    db.tasks.get(id).then((t) => setTask(t ?? null));
+    if (!openDialog) {
+      return;
+    }
+
+    const loadTask = async () => {
+      setLoadingOpen(true);
+      setTask(null);
+      const t = await db.tasks.get(id);
+      setTask(t ?? null);
+      setLoadingOpen(false);
+    };
+
+    loadTask();
   }, [openDialog, id]);
 
+
   const deleteTask = async () => {
-    await db.tasks.delete(id);
-    taskEvent.dispatchEvent(new Event("refresh"));
-    setOpenDialog(false);
-  };
+  setLoadingDelete(true);
+  await db.tasks.delete(id);
+  taskEvent.dispatchEvent(new Event("refresh"));
+  setLoadingDelete(false);
+  setOpenDialog(false);
+};
 
   return (
     <>
@@ -63,8 +79,9 @@ const Task = ({ id, title }: { id: number, title: string }) => {
           <DialogHeader>
             <DialogTitle>Task Details</DialogTitle>
           </DialogHeader>
-
-          {task ? (
+          {loadingOpen ? (
+            <div className="py-4 text-center">Loading...</div>
+          ) : task ? (
             <div className="space-y-3">
               <h3 className="font-semibold text-2xl">{task.name}</h3>
 
@@ -72,23 +89,31 @@ const Task = ({ id, title }: { id: number, title: string }) => {
                 {task.description || "No description"}
               </p>
 
-              <p className="text-lg text-gray-800 ">
-                Status: <span className='uppercase'>{task.status.replace("_", " ")}
-                  </span> 
+              <p className="text-lg text-gray-800">
+                Status: <span className='uppercase'>{task.status.replace("_", " ")}</span>
               </p>
 
               <div className="flex space-x-4 items-end justify-end pt-2">
-                <Button size="sm" className='text-base cursor-pointer! px-4 py-3 rounded-sm'  onClick={() => setOpenEdit(true)}>
-                  Edit
+                <Button 
+                  size="sm" 
+                  variant="destructive"
+                  className='text-base px-4 py-3 rounded-sm'
+                  onClick={deleteTask}
+                  disabled={loadingDelete}
+                >
+                  {loadingDelete ? "Deleting..." : "Delete"}
                 </Button>
-
-                <Button size="sm"  className='text-base cursor-pointer! px-4 py-3 rounded-sm' variant="destructive" onClick={deleteTask}>
-                  Delete
+                <Button 
+                  size="sm" 
+                  className='text-base px-4 py-3 rounded-sm'
+                  onClick={() => setOpenEdit(true)}
+                >
+                  Edit
                 </Button>
               </div>
             </div>
           ) : (
-            "Loading..."
+            <div className="py-4 text-center">No task found</div>
           )}
         </DialogContent>
       </Dialog>

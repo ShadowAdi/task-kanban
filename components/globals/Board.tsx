@@ -88,19 +88,19 @@ const Board = () => {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <main className="flex-1 w-full h-full py-4 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 gap-4">
-        <Column id="todo" title="To Do">
+        <Column id="todo" title="To Do" count={columns.todo.length}>
           {columns.todo.map((task, idx) => (
             <Task key={idx} id={task.id!} title={task.name} />
           ))}
         </Column>
 
-        <Column id="in_progress" title="In Progress">
+        <Column id="in_progress" title="In Progress" count={columns.in_progress.length}>
           {columns.in_progress.map((task, idx) => (
             <Task key={idx} id={task.id!} title={task.name} />
           ))}
         </Column>
 
-        <Column id="done" title="Done">
+        <Column id="done" title="Done" count={columns.done.length}>
           {columns.done.map((task, idx) => (
             <Task key={idx} id={task.id!} title={task.name} />
           ))}
