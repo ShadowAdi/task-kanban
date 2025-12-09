@@ -43,18 +43,23 @@ const Task = ({ id, title }: { id: number, title: string }) => {
 
 
   const deleteTask = async () => {
-  setLoadingDelete(true);
-  await db.tasks.delete(id);
-  taskEvent.dispatchEvent(new Event("refresh"));
-  setLoadingDelete(false);
-  setOpenDialog(false);
-};
+    setLoadingDelete(true);
+    await db.tasks.delete(id);
+    taskEvent.dispatchEvent(new Event("refresh"));
+    setLoadingDelete(false);
+    setOpenDialog(false);
+  };
 
   return (
     <>
       <div
         style={style}
-        className="p-3 rounded-lg bg-gray-200 shadow-sm mb-2 flex items-center justify-between"
+        className="
+    p-3 rounded-lg 
+    bg-gray-200 dark:bg-gray-800 
+    text-gray-900 dark:text-gray-100
+    shadow-sm mb-2 flex items-center justify-between
+  "
         ref={setNodeRef}
       >
         <div
@@ -94,8 +99,8 @@ const Task = ({ id, title }: { id: number, title: string }) => {
               </p>
 
               <div className="flex space-x-4 items-end justify-end pt-2">
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   variant="destructive"
                   className='text-base px-4 py-3 rounded-sm'
                   onClick={deleteTask}
@@ -103,8 +108,8 @@ const Task = ({ id, title }: { id: number, title: string }) => {
                 >
                   {loadingDelete ? "Deleting..." : "Delete"}
                 </Button>
-                <Button 
-                  size="sm" 
+                <Button
+                  size="sm"
                   className='text-base px-4 py-3 rounded-sm'
                   onClick={() => setOpenEdit(true)}
                 >

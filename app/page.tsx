@@ -1,5 +1,6 @@
 'use client'
 import Board from "@/components/globals/Board";
+import { ModeToggle } from "@/components/globals/MoodToggle";
 import TaskPopover from "@/components/globals/TaskPopover";
 import { Button } from "@/components/ui/button";
 import { taskEvent } from "@/db/db";
@@ -11,7 +12,9 @@ export default function Home() {
         <h1 className="text-4xl font-medium">
           All Taks
         </h1>
+
         <div className="flex space-x-3 items-center">
+          <ModeToggle/>
           <Button onClick={() => {
             taskEvent.dispatchEvent(new Event("refresh"));
           }} className="cursor-pointer!" variant={"outline"}>

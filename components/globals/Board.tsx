@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Column } from "./Column";
 import Task from "./Task";
 import { db, taskEvent, TaskInterface } from "@/db/db";
+import TaskSkeleton from "./TaskSkeleton";
 
 const Board = () => {
   const [columns, setColumns] = useState<{
@@ -74,7 +75,6 @@ const Board = () => {
         });
       }
 
-      // Insert task in new column
       if (movedTask) {
         movedTask.status = newStatus;
         newState[newStatus].push(movedTask);
@@ -89,22 +89,35 @@ const Board = () => {
     <DndContext onDragEnd={handleDragEnd}>
       <main className="flex-1 w-full h-full py-4 grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 gap-4">
         <Column id="todo" title="To Do" count={columns.todo.length}>
-          {columns.todo.map((task, idx) => (
-            <Task key={idx} id={task.id!} title={task.name} />
-          ))}
+          {loading ? (
+            <TaskSkeleton count={3} />
+          ) : (
+            columns.todo.map((task, idx) => (
+              <Task key={idx} id={task.id!} title={task.name} />
+            ))
+          )}
         </Column>
 
         <Column id="in_progress" title="In Progress" count={columns.in_progress.length}>
-          {columns.in_progress.map((task, idx) => (
-            <Task key={idx} id={task.id!} title={task.name} />
-          ))}
+          {loading ? (
+            <TaskSkeleton count={3} />
+          ) : (
+            columns.in_progress.map((task, idx) => (
+              <Task key={idx} id={task.id!} title={task.name} />
+            ))
+          )}
         </Column>
 
         <Column id="done" title="Done" count={columns.done.length}>
-          {columns.done.map((task, idx) => (
-            <Task key={idx} id={task.id!} title={task.name} />
-          ))}
+          {loading ? (
+            <TaskSkeleton count={3} />
+          ) : (
+            columns.done.map((task, idx) => (
+              <Task key={idx} id={task.id!} title={task.name} />
+            ))
+          )}
         </Column>
+
       </main>
     </DndContext>
   );
