@@ -41,7 +41,6 @@ const Task = ({ id, title }: { id: number, title: string }) => {
         className="p-3 rounded-lg bg-gray-200 shadow-sm mb-2 flex items-center justify-between"
         ref={setNodeRef}
       >
-        {/* CLICK AREA FOR OPENING DIALOG */}
         <div
           className="cursor-pointer w-full"
           onClick={() => setOpenDialog(true)}

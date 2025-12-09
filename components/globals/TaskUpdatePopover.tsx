@@ -79,7 +79,6 @@ export default function EditTaskDialog({ taskId, open, setOpen }: { taskId: numb
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-                        {/* Name */}
                         <FormField
                             control={form.control}
                             name="name"
@@ -94,7 +93,6 @@ export default function EditTaskDialog({ taskId, open, setOpen }: { taskId: numb
                             )}
                         />
 
-                        {/* Description */}
                         <FormField
                             control={form.control}
                             name="description"
@@ -109,7 +107,6 @@ export default function EditTaskDialog({ taskId, open, setOpen }: { taskId: numb
                             )}
                         />
 
-                        {/* Status */}
                         <FormField
                             control={form.control}
                             name="status"
