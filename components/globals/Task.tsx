@@ -1,3 +1,4 @@
+'use client'
 import { useDraggable } from '@dnd-kit/core'
 import React, { useEffect, useState } from 'react'
 import EditTaskDialog from './TaskUpdatePopover';
