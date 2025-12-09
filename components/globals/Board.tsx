@@ -1,6 +1,6 @@
 "use client";
 
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import React, { useEffect, useState } from "react";
 import { Column } from "./Column";
 import Task from "./Task";
@@ -38,47 +38,65 @@ const Board = () => {
 
 
 
+const handleDragEnd = (event: DragEndEvent) => {
+  const { over, active } = event;
+  if (!over) return;
 
-  const handleDragEnd = (event: any) => {
-    const { over, active } = event;
+  const taskId = active.id;
 
-    if (!over) return;
-
-    console.log("Task", active.id, "dropped in column", over.id);
-
-    // Update state: remove from old column & add to new column
-    setColumns((prev) => {
-      const newState: any = { ...prev };
-
-      // Remove from any column where task exists
-      for (const col in newState) {
-        newState[col] = newState[col].filter((tid) => tid !== active.id);
-      }
-
-      // Add to the new column
-      newState[over.id].push(active.id);
-
-      return newState;
-    });
+  const map: Record<string, "todo" | "in_progress" | "done"> = {
+    "todo": "todo",
+    "in_progress": "in_progress",
+    "in-progress": "in_progress",
+    "done": "done",
   };
+
+  const newStatus = map[over.id];
+  if (!newStatus) return;
+
+  setColumns((prev) => {
+    let movedTask: TaskInterface | null = null;
+
+    const newState = {
+      todo: [],
+      in_progress: [],
+      done: [],
+    } as typeof prev;
+
+    for (const col of Object.keys(prev) as (keyof typeof prev)[]) {
+      prev[col].forEach((t) => {
+        if (t.id === taskId) movedTask = t;
+        else newState[col].push(t);
+      });
+    }
+
+    // Insert task in new column
+    if (movedTask) {
+      movedTask.status = newStatus;
+      newState[newStatus].push(movedTask);
+    }
+
+    return newState;
+  });
+};
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <main className="flex-1 w-[80%] h-full py-4 grid grid-cols-3 gap-4">
         <Column id="todo" title="To Do">
-          {columns.todo.map((task,idx) => (
+          {columns.todo.map((task, idx) => (
             <Task key={idx} id={task?.id} title={task.name} />
           ))}
         </Column>
 
-        <Column id="in-progress" title="In Progress">
-         {columns.in_progress.map((task,idx) => (
+        <Column id="in_progress" title="In Progress">
+          {columns.in_progress.map((task, idx) => (
             <Task key={idx} id={task?.id} title={task.name} />
           ))}
         </Column>
 
         <Column id="done" title="Done">
-          {columns.done.map((task,idx) => (
+          {columns.done.map((task, idx) => (
             <Task key={idx} id={task?.id} title={task.name} />
           ))}
         </Column>
