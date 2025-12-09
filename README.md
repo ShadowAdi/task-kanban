@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📌 Task Management Board (Kanban Style)
 
-## Getting Started
+A modern Kanban-style task board built using **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **dnd-kit**.  
+The board supports drag-and-drop workflow management with persistent storage via IndexedDB.
 
-First, run the development server:
+---
 
+## 🚀 Features
+
+### ✅ Core Features Implemented
+- **Multiple Columns** (To Do, In Progress, Done — scalable to any number)
+- **Add Tasks** with title and description
+- **Edit Tasks** via modal/popover
+- **Delete Tasks**
+- **Drag & Drop** tasks between columns using **dnd-kit**
+- **Persistent Storage** using `IndexedDB` (tasks remain after refresh)
+- **Responsive UI** (mobile + desktop)
+- **Dark Mode Support**
+- **Task Count per Column**
+
+---
+
+## 🎨 UI/UX Features
+- Clean, modern interface with Tailwind + shadcn/ui components  
+- Smooth drag-and-drop animations  
+- Task skeleton loaders for better UX  
+- Empty-state messages for columns without tasks  
+- Automatic theme switching (light/dark mode)
+
+---
+
+## 🧠 How AI Was Used (Transparency)
+I wrote the application's logic, drag-and-drop behavior, and IndexedDB integration myself.
+
+I used ChatGPT **only** to:
+- Generate color palettes and theming suggestions  
+- Help structure TypeScript interfaces and types  
+- Explain and guide the usage of IndexedDB  
+- Provide example snippets for cleaner component organization  
+
+All final implementations, logic decisions, and integrations were done manually with full understanding.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|---------|------------|
+| Framework | **Next.js 15 (App Router)** |
+| Language | **TypeScript** |
+| Styling | **Tailwind CSS**, **shadcn/ui** |
+| Drag & Drop | **dnd-kit** |
+| Storage | **IndexedDB** |
+| UI Components | Custom + shadcn/ui |
+
+---
+
+## 📁 Project Structure
+
+app/
+│── layout.tsx
+│── page.tsx
+│── globals.css
+│
+├── components/
+│ ├── globals/
+│ │ ├── Board.tsx
+│ │ ├── Column.tsx
+│ │ ├── Task.tsx
+│ │ ├── TaskPopover.tsx
+│ │ ├── TaskSkeleton.tsx
+│ │ └── TaskUpdatePopover.tsx
+│ │
+│ ├── provider/
+│ │ └── theme-provider.tsx
+│
+├── ui/ (shadcn components)
+|
+├── db/
+│ ├── db.ts ← IndexedDB utilities
+└── lib/
+  ├── utils.ts 
+
+## 🧩 Bonus Features Implemented
+- ✔ **Dark Mode Toggle**
+- ✔ **Task Count Display in Columns**
+
+---
+
+## ▶️ Getting Started
+
+### 1. Install dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Run development server
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Open in browser
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+💡 Future Improvements (Optional)
 
-## Learn More
+Task priority levels (High / Medium / Low)
 
-To learn more about Next.js, take a look at the following resources:
+Search & filter tasks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Subtasks
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+User authentication
 
-## Deploy on Vercel
+Cloud sync using an API backend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🏁 Conclusion
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project demonstrates:
+
+Client-side state management
+
+IndexedDB persistence
+
+Drag-and-drop interaction with dnd-kit
+
+Modern UI development using Next.js 15 + Tailwind
+
+Clean and scalable component architecture
+
+Perfect for showcasing frontend engineering, state management, and UI/UX skills.
