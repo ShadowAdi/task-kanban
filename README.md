@@ -3,7 +3,7 @@
 A modern Kanban-style task board built using **Next.js 15**, **TypeScript**, **Tailwind CSS**, and **dnd-kit**.  
 The board supports drag-and-drop workflow management with persistent storage via IndexedDB.
 
-Deployed Link(https://task-kanban-henna.vercel.app/)[https://task-kanban-henna.vercel.app/]
+[https://task-kanban-henna.vercel.app/](https://task-kanban-henna.vercel.app/)
 
 ---
 
@@ -38,7 +38,11 @@ I used ChatGPT **only** to:
 - Generate color palettes and theming suggestions  
 - Help structure TypeScript interfaces and types  
 - Explain and guide the usage of IndexedDB  
-- Provide example snippets for cleaner component organization  
+- Provide example snippets for cleaner component organization
+
+❌ Limitation
+Drag-and-drop may not work on the first attempt.
+Sometimes the item doesn’t move initially, which might be related to how unique IDs are assigned to tasks within each column. I still need to debug and verify the ID generation and mapping logic to ensure consistent draggable behavior.
 
 All final implementations, logic decisions, and integrations were done manually with full understanding.
 
