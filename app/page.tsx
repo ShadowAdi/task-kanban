@@ -1,4 +1,5 @@
 import Board from "@/components/globals/Board";
+import TaskPopover from "@/components/globals/TaskPopover";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
@@ -9,13 +10,9 @@ export default function Home() {
         <h1 className="text-4xl font-medium">
           All Taks
         </h1>
-        <Button className="text-base cursor-pointer!">
-          <Plus />
-          Create New
-        </Button>
-
+       <TaskPopover/>
       </div>
-      <Board/>
+      <Board />
     </main>
   );
 }

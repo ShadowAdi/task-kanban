@@ -1,7 +1,7 @@
 import { useDroppable } from "@dnd-kit/core";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 
-const Column = ({
+export const Column = ({
   id,
   title,
   children,
@@ -10,19 +10,13 @@ const Column = ({
   title: string;
   children?: ReactNode;
 }) => {
-  const { setNodeRef, isOver } = useDroppable({ id });
-
+  const {setNodeRef,isOver}=useDroppable({id})
   return (
-    <div
-      ref={setNodeRef}
-      className={`flex flex-col p-4 rounded-xl min-h-[80vh] border 
-        ${isOver ? "bg-blue-100" : "bg-white"}
-      `}
-    >
-      <h2 className="font-semibold mb-3">{title}</h2>
+    <div ref={setNodeRef}   className={`flex flex-col p-4 rounded-xl min-h-[80vh] border 
+        ${isOver ?id==="todo"? "bg-blue-100":id==="done"?"bg-yellow-100":"bg-green-100" : "bg-white"}
+      `}>
+         <h2 className="font-semibold mb-3">{title}</h2>
       {children}
     </div>
-  );
-};
-
-export default Column;
+  )
+}

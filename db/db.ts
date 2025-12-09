@@ -1,6 +1,6 @@
 import Dexie, { Table } from "dexie";
 
-export interface Task {
+export interface TaskInterface {
   id?: number;
   name: string;
   description?: string;
@@ -10,7 +10,7 @@ export interface Task {
 
 
 class MyDatebase extends Dexie{
-    tasks!:Table<Task>;
+    tasks!:Table<TaskInterface>;
     constructor(){
         super("kanbanDB");
         this.version(1).stores({

@@ -10,6 +10,7 @@ import { Textarea } from '../ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { db } from '@/db/db'
 import { toast } from 'sonner'
+import { useState } from 'react'
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -18,6 +19,7 @@ const formSchema = z.object({
 });
 
 const TaskPopover = () => {
+    const [open, setOpen] = useState(false);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -29,6 +31,7 @@ const TaskPopover = () => {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        alert("hii")
         const newTask = {
             ...values,
             createdAt: new Date()
@@ -37,24 +40,22 @@ const TaskPopover = () => {
         await db.tasks.add(newTask)
         toast.success("Task has been created")
         form.reset()
+        setOpen(false)
     }
 
     return (
-        <Dialog>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <DialogTrigger asChild>
-                        <Button variant="outline">Open Dialog</Button>
-                    </DialogTrigger>
-
-                    <DialogContent className="sm:max-w-[425px]">
-                        <DialogHeader>
-                            <DialogTitle>Create Task</DialogTitle>
-                            <DialogDescription>Create your task</DialogDescription>
-                        </DialogHeader>
-
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button className='cursor-pointer!'> Create Task</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Create Task</DialogTitle>
+                    <DialogDescription>Create your task</DialogDescription>
+                </DialogHeader>
+                <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <div className="grid gap-4">
-
                             <FormField
                                 control={form.control}
                                 name="name"
@@ -108,19 +109,16 @@ const TaskPopover = () => {
                                     </FormItem>
                                 )}
                             />
-
                         </div>
-
                         <DialogFooter>
                             <DialogClose asChild>
-                                <Button variant="outline">Cancel</Button>
+                                <Button variant="outline" className='cursor-pointer!'>Cancel</Button>
                             </DialogClose>
-
-                            <Button type="submit">Save changes</Button>
+                            <Button type="submit" className='cursor-pointer!'>Save changes</Button>
                         </DialogFooter>
-                    </DialogContent>
-                </form>
-            </Form>
+                    </form>
+                </Form>
+            </DialogContent>
         </Dialog>
     )
 }
