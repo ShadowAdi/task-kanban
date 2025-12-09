@@ -89,16 +89,20 @@ const Task = ({ id, title }: { id: number, title: string }) => {
             <div className="py-4 text-center">Loading...</div>
           ) : task ? (
             <div className="space-y-3">
-              <h3 className="font-semibold text-2xl">{task.name}</h3>
+              <h3 className="font-semibold text-2xl text-stone-800 dark:text-stone-100">
+                {task.name}
+              </h3>
 
-              <p className="text-base text-stone-900">
+              <p className="text-base text-stone-900 dark:text-stone-300">
                 {task.description || "No description"}
               </p>
 
-              <p className="text-lg text-gray-800">
-                Status: <span className='uppercase'>{task.status.replace("_", " ")}</span>
+              <p className="text-lg text-gray-800 dark:text-gray-300">
+                Status:
+                <span className="uppercase font-semibold text-stone-700 dark:text-stone-200">
+                  {task.status.replace("_", " ")}
+                </span>
               </p>
-
               <div className="flex space-x-4 items-end justify-end pt-2">
                 <Button
                   size="sm"
